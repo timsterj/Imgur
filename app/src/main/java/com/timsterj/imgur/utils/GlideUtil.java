@@ -5,7 +5,7 @@ public class GlideUtil {
     public static String getThumbnailLink(String link) {
         StringBuilder stringBuilder = new StringBuilder(link);
 
-        stringBuilder.insert(link.length() - 4, "t");
+        stringBuilder.insert(link.length() - 4, "s");
 
         return stringBuilder.toString();
     }
