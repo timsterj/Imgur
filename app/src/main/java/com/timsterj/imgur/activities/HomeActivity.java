@@ -10,7 +10,6 @@ import com.timsterj.imgur.R;
 import com.timsterj.imgur.base.BaseActivity;
 import com.timsterj.imgur.base.OnBackPressed;
 import com.timsterj.imgur.contracts.Contracts;
-import com.timsterj.imgur.contracts.mvvm.HomeContract;
 import com.timsterj.imgur.databinding.ActivityHomeBinding;
 import com.timsterj.imgur.navigation.Screens;
 import com.timsterj.imgur.viewmodel.HomeViewModel;
@@ -19,7 +18,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import moxy.presenter.InjectPresenter;
 import ru.terrakok.cicerone.Navigator;
 import ru.terrakok.cicerone.NavigatorHolder;
 import ru.terrakok.cicerone.Router;
