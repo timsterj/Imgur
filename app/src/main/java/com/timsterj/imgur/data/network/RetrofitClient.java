@@ -22,16 +22,16 @@ public class RetrofitClient {
     public static Retrofit getClient(String baseURL){
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-        OkHttpClient client = new OkHttpClient.Builder()
-                .addInterceptor(interceptor)
-                .build();
+//        OkHttpClient client = new OkHttpClient.Builder()
+//                .addInterceptor(interceptor)
+//                .build();
 
         if (retrofit == null) {
             retrofit = new Retrofit.Builder()
                     .baseUrl(baseURL)
                     .addConverterFactory(GsonConverterFactory.create())
                     .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                    .client(client)
+//                    .client(client)
                     .build();
         }
 

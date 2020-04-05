@@ -32,4 +32,6 @@ public class GalleriesAdapter extends PagedListAdapter<Gallery,BaseViewHolder> {
         holder.setData(gallery, position);
     }
 
+
+
 }

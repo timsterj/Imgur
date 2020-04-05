@@ -97,11 +97,6 @@ public class HomeFragment extends BaseFragment<HomeFragmentViewModel> implements
         binding.progressBar.setVisibility(View.GONE);
     }
 
-    private void showInvalidLoaded() {
-        binding.progressBar.setVisibility(View.GONE);
-        binding.txtError.setVisibility(View.VISIBLE);
-    }
-
     @Override
     public void updateList(PagedList<Gallery> galleries) {
         adapter.submitList(galleries);
