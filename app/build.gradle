@@ -88,13 +88,15 @@ dependencies {
     annotationProcessor "com.github.bumptech.glide:compiler:$glide_version"
 
     // Retrofit
-    def retrofit_version = "2.7.2"
+    def retrofit_version = "2.7.1"
     def okhttp_version = "4.4.0"
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
     implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
     implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofit_version"
-    implementation("com.squareup.okhttp3:logging-interceptor:3.11.0")
-    implementation "com.squareup.okhttp3:okhttp:3.11.0"
+    implementation "com.squareup.okhttp3:logging-interceptor:3.12.8"
+    implementation ("com.squareup.okhttp3:okhttp:3.12.8"){
+        force = true
+    }
 
     // Moxy
     def moxy_version = "2.1.1"
