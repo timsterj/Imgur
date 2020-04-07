@@ -1,4 +1,4 @@
-package com.timsterj.imgur.adapters;
+package com.timsterj.imgur.adapters.holders;
 
 import android.content.Context;
 import android.view.View;
@@ -10,8 +10,11 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.timsterj.imgur.base.BaseViewHolder;
 import com.timsterj.imgur.databinding.GalleryItemBinding;
+import com.timsterj.imgur.listeners.IItemClickListener;
 import com.timsterj.imgur.model.Gallery;
 import com.timsterj.imgur.model.Image;
+
+import java.util.Locale;
 
 import static com.timsterj.imgur.utils.GlideUtil.getThumbnailLink;
 
@@ -21,8 +24,21 @@ public class GalleryViewHolder extends BaseViewHolder<Gallery> {
     private ConstraintSet set = new ConstraintSet();
     private Context mContext;
 
+    private IItemClickListener<Gallery> galleryItemClickListener;
+
+    public GalleryViewHolder(@NonNull View itemView) {
+        super(itemView);
+        binding = GalleryItemBinding.bind(itemView);
+        mContext = itemView.getContext();
+    }
+
     @Override
-    public void setData(Gallery gallery, int position) {
+    public void setListener(IItemClickListener listener) {
+        this.galleryItemClickListener = listener;
+    }
+
+    @Override
+    public void setData(Gallery gallery) {
         String link;
         int width;
         int height;
@@ -42,16 +58,12 @@ public class GalleryViewHolder extends BaseViewHolder<Gallery> {
         loadPreview(link);
 
         set.clone(binding.parentConstraint);
-        set.setDimensionRatio(binding.imgGalleryPreview.getId(), String.format("%d:%d", width, height));
+        set.setDimensionRatio(binding.imgGalleryPreview.getId(), String.format(Locale.getDefault(),"%d:%d", width, height));
         set.applyTo(binding.parentConstraint);
 
+        binding.imgGalleryPreview.setOnClickListener(view-> galleryItemClickListener.onItemClick(gallery));
     }
 
-    public GalleryViewHolder(@NonNull View itemView) {
-        super(itemView);
-        binding = GalleryItemBinding.bind(itemView);
-        mContext = itemView.getContext();
-    }
 
     private void loadPreview(String link) {
         String thumbnailLink = getThumbnailLink(link);

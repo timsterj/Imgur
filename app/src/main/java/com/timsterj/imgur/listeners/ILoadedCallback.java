@@ -1,9 +1,9 @@
 package com.timsterj.imgur.listeners;
 
-import com.timsterj.imgur.model.Response;
+import com.timsterj.imgur.data.network.dto.GalleryDTO;
 
 public interface ILoadedCallback {
 
-    void onSuccessLoaded(Response response);
+    void onSuccessLoaded(GalleryDTO galleryDTO);
 
 }

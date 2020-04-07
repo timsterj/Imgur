@@ -9,8 +9,12 @@ public class Gallery {
 
     private String id;
     private String title;
+    private String description;
+    private int datetime;
     private String link;
     private int views;
+    private int points;
+    private int score;
     private int width;
     private int height;
 
@@ -25,14 +29,6 @@ public class Gallery {
         this.id = id;
     }
 
-    public String getLink() {
-        return link;
-    }
-
-    public void setLink(String link) {
-        this.link = link;
-    }
-
     public String getTitle() {
         return title;
     }
@@ -41,8 +37,52 @@ public class Gallery {
         this.title = title;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public int getDatetime() {
+        return datetime;
+    }
+
+    public void setDatetime(int datetime) {
+        this.datetime = datetime;
+    }
+
+    public String getLink() {
+        return link;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
+    }
+
     public int getViews() {
         return views;
+    }
+
+    public void setViews(int views) {
+        this.views = views;
+    }
+
+    public int getPoints() {
+        return points;
+    }
+
+    public void setPoints(int points) {
+        this.points = points;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
     }
 
     public int getWidth() {
@@ -61,10 +101,6 @@ public class Gallery {
         this.height = height;
     }
 
-    public void setViews(int views) {
-        this.views = views;
-    }
-
     public ArrayList<Image> getImages() {
         return images;
     }
@@ -72,7 +108,6 @@ public class Gallery {
     public void setImages(ArrayList<Image> images) {
         this.images = images;
     }
-
 
     public static final DiffUtil.ItemCallback<Gallery> CALLBACK = new DiffUtil.ItemCallback<Gallery>() {
         @Override

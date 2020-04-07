@@ -2,5 +2,10 @@
     <string name="app_name">Imgur</string>
 
     <string name="error_internet_connection">Отсутствует интернет соединение!</string>
-    <string name="gallery_image">Gallery Image</string>
+    <string name="popular_comments">Популярные комментарии</string>
+    <string name="gallery_info">Информация о галерее</string>
+    <string name="gallery">Галерея</string>
+    <string name="gallery_preview">Предпросмотр галереи</string>
+    <string name="gallery_image">Изображение из галереи</string>
+    <string name="popular_galleries">Популярные</string>
 </resources>

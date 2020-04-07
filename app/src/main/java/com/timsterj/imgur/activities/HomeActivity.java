@@ -12,7 +12,7 @@ import com.timsterj.imgur.base.OnBackPressed;
 import com.timsterj.imgur.contracts.Contracts;
 import com.timsterj.imgur.databinding.ActivityHomeBinding;
 import com.timsterj.imgur.navigation.Screens;
-import com.timsterj.imgur.viewmodel.HomeViewModel;
+import com.timsterj.imgur.viewmodel.GalleryViewModel;
 
 import java.util.List;
 
@@ -23,10 +23,9 @@ import ru.terrakok.cicerone.NavigatorHolder;
 import ru.terrakok.cicerone.Router;
 import ru.terrakok.cicerone.android.support.SupportAppNavigator;
 
-public class HomeActivity extends BaseActivity<HomeViewModel> {
+public class HomeActivity extends BaseActivity<GalleryViewModel> {
 
     private ActivityHomeBinding binding;
-    private HomeViewModel viewModel;
 
     @Inject
     Router router;
@@ -38,7 +37,9 @@ public class HomeActivity extends BaseActivity<HomeViewModel> {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        App.getINSTANCE().getHomeComponent().inject(this);
+        App.getINSTANCE().getHomeComponent()
+                .inject(this);
+
         binding = ActivityHomeBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
@@ -50,16 +51,15 @@ public class HomeActivity extends BaseActivity<HomeViewModel> {
 
     @Override
     public void init() {
-        router.replaceScreen(new Screens.HomeScreen(Contracts.NavigationConstant.HOME_FRAGMENT));
+        router.replaceScreen(new Screens.GalleryFlow.HomeScreen(Contracts.NavigationConstant.HOME_FRAGMENT));
     }
 
     @Override
-    public HomeViewModel getViewModel() {
-        viewModel = new ViewModelProvider(this).get(HomeViewModel.class);
-        return viewModel;
+    public GalleryViewModel getViewModel() {
+        return new ViewModelProvider(this).get(GalleryViewModel.class);
     }
 
-    private Navigator getNavigator(){
+    private Navigator getNavigator() {
         if (navigator == null) {
             navigator = new SupportAppNavigator(this, getSupportFragmentManager(), R.id.ftb_container);
         }

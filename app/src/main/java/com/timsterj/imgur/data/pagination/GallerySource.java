@@ -23,7 +23,7 @@ public class GallerySource extends PageKeyedDataSource<Integer, Gallery> {
     @Inject
     ImgurApi imgurApi;
 
-    public void init() {
+    void init() {
         App.getINSTANCE().getAppComponent().inject(this);
         dataState = new MutableLiveData<>();
     }
@@ -32,7 +32,6 @@ public class GallerySource extends PageKeyedDataSource<Integer, Gallery> {
     public void loadInitial(@NonNull LoadInitialParams<Integer> params, @NonNull LoadInitialCallback<Integer, Gallery> callback) {
 
         disposableBag.add(imgurApi.getGalleries(
-                Contracts.RetrofitConstant.CLIENT_ID,
                 "top",
                 "top",
                 String.valueOf(1)
@@ -56,7 +55,6 @@ public class GallerySource extends PageKeyedDataSource<Integer, Gallery> {
     public void loadAfter(@NonNull LoadParams<Integer> params, @NonNull LoadCallback<Integer, Gallery> callback) {
 
         disposableBag.add(imgurApi.getGalleries(
-                Contracts.RetrofitConstant.CLIENT_ID,
                 "top",
                 "top",
                 String.valueOf(params.key)

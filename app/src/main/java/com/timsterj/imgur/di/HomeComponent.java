@@ -1,8 +1,9 @@
 package com.timsterj.imgur.di;
 
 import com.timsterj.imgur.activities.HomeActivity;
-import com.timsterj.imgur.data.network.repositories.ImgurRepository;
+import com.timsterj.imgur.fragments.GalleryInfoFragment;
 import com.timsterj.imgur.fragments.HomeFragment;
+import com.timsterj.imgur.viewmodel.GalleryViewModel;
 
 import dagger.Subcomponent;
 
@@ -14,7 +15,8 @@ public interface HomeComponent {
 
     // Fragments
     void inject(HomeFragment homeFragment);
+    void inject(GalleryInfoFragment galleryInfoFragment);
 
-    // Repositories
-    void inject(ImgurRepository imgurRepository);
+    // ViewModels
+    void inject(GalleryViewModel galleryViewModel);
 }

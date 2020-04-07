@@ -18,22 +18,22 @@ import com.timsterj.imgur.base.BaseFragment;
 import com.timsterj.imgur.contracts.Contracts;
 import com.timsterj.imgur.contracts.mvvm.HomeFragmentContract;
 import com.timsterj.imgur.databinding.FragmentHomeBinding;
+import com.timsterj.imgur.listeners.IItemClickListener;
 import com.timsterj.imgur.model.Gallery;
-import com.timsterj.imgur.viewmodel.HomeFragmentViewModel;
+import com.timsterj.imgur.navigation.Screens;
+import com.timsterj.imgur.viewmodel.GalleryViewModel;
 
 import javax.inject.Inject;
 
 import io.reactivex.disposables.CompositeDisposable;
 import ru.terrakok.cicerone.Router;
 
-public class HomeFragment extends BaseFragment<HomeFragmentViewModel> implements HomeFragmentContract.Navigator {
+public class HomeFragment extends BaseFragment<GalleryViewModel> implements HomeFragmentContract.Navigator, IItemClickListener<Gallery> {
 
     private CompositeDisposable disposableBag = new CompositeDisposable();
     private FragmentHomeBinding binding;
 
     private GalleriesAdapter adapter;
-
-    private HomeFragmentViewModel homeFragmentViewModel;
 
     @Inject
     Router router;
@@ -49,16 +49,6 @@ public class HomeFragment extends BaseFragment<HomeFragmentViewModel> implements
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        binding = FragmentHomeBinding.inflate(getLayoutInflater());
-        App.getINSTANCE().getHomeComponent().inject(this);
-
-
-        init();
-    }
-
-    @Override
     public void init() {
         initRvGalleries();
         initViewModel();
@@ -67,12 +57,15 @@ public class HomeFragment extends BaseFragment<HomeFragmentViewModel> implements
     private void initViewModel() {
         getViewModel().getListLiveData().observe(this, pagedList -> adapter.submitList(pagedList));
 
-        getViewModel().getDataState().observe(this, state -> showState(state));
+        getViewModel().getDataState().observe(this, this::showState);
 
     }
 
+
+
     private void initRvGalleries() {
         adapter = new GalleriesAdapter();
+        adapter.setGalleryClickListener(this);
 
         StaggeredGridLayoutManager manager = new StaggeredGridLayoutManager(2, 1);
 
@@ -102,6 +95,16 @@ public class HomeFragment extends BaseFragment<HomeFragmentViewModel> implements
         adapter.submitList(galleries);
     }
 
+    @Override
+    public void onItemClick(Gallery data) {
+        getViewModel().select(data);
+
+        router.navigateTo(new Screens.GalleryFlow.GalleryInfoScreen(
+                Contracts.NavigationConstant.GALLERY_INFO_FRAGMENT)
+        );
+
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -109,9 +112,23 @@ public class HomeFragment extends BaseFragment<HomeFragmentViewModel> implements
     }
 
     @Override
-    public HomeFragmentViewModel getViewModel() {
-        homeFragmentViewModel = new ViewModelProvider(this).get(HomeFragmentViewModel.class);
-        return homeFragmentViewModel;
+    public GalleryViewModel getViewModel() {
+        return new ViewModelProvider(getActivity()).get(GalleryViewModel.class);
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        binding = FragmentHomeBinding.inflate(getLayoutInflater());
+        App.getINSTANCE().getHomeComponent()
+                .inject(this);
+
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        init();
     }
 
     @Override

@@ -1,5 +1,9 @@
 package com.timsterj.imgur.base;
 
+import android.app.Application;
+
+import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.ViewModel;
 
 public abstract class BaseViewModel<N> extends ViewModel {
@@ -9,7 +13,6 @@ public abstract class BaseViewModel<N> extends ViewModel {
     public BaseViewModel() {
         super();
     }
-
 
     public abstract void init();
 

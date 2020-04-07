@@ -4,9 +4,7 @@ import android.content.Context;
 
 import com.timsterj.imgur.data.pagination.GallerySource;
 import com.timsterj.imgur.di.modules.NavigationModule;
-import com.timsterj.imgur.di.modules.RepositoryModule;
 import com.timsterj.imgur.di.modules.RetrofitModule;
-import com.timsterj.imgur.viewmodel.HomeFragmentViewModel;
 
 import javax.inject.Singleton;
 
@@ -17,19 +15,17 @@ import dagger.Component;
 @Component(
         modules = {
                 NavigationModule.class,
-                RetrofitModule.class,
-                RepositoryModule.class
+                RetrofitModule.class
         }
 )
 public interface AppComponent {
 
 
-    // ViewModels
-    void inject(HomeFragmentViewModel homeFragmentViewModel);
-
     void inject(GallerySource gallerySource);
 
+
     HomeComponent plusHomeComponent();
+
 
     @Component.Builder
     interface Builder {

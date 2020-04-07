@@ -3,6 +3,8 @@ package com.timsterj.imgur;
 import android.app.Application;
 import android.content.Context;
 
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelStore;
 import androidx.multidex.MultiDex;
 
 import com.timsterj.imgur.di.AppComponent;
@@ -24,6 +26,8 @@ public class App extends Application {
         appComponent = DaggerAppComponent.builder()
                 .context(getApplicationContext())
                 .build();
+
+
     }
 
     public static App getINSTANCE() {
@@ -40,6 +44,7 @@ public class App extends Application {
         return appComponent;
     }
 
+
     public HomeComponent getHomeComponent() {
         if (homeComponent == null) {
             homeComponent = appComponent.plusHomeComponent();
@@ -50,4 +55,5 @@ public class App extends Application {
     public void clearHomeComponent(){
         homeComponent = null;
     }
+
 }
