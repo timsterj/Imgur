@@ -154,6 +154,7 @@ public class GalleryInfoFragment extends BaseFragment<GalleryViewModel> {
         super.onCreate(savedInstanceState);
         App.getINSTANCE().getHomeComponent()
                 .inject(this);
+
         binding = FragmentGalleryInfoBinding.inflate(getLayoutInflater());
     }
 
