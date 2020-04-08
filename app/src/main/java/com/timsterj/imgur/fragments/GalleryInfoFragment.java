@@ -1,6 +1,7 @@
 package com.timsterj.imgur.fragments;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,6 +53,7 @@ public class GalleryInfoFragment extends BaseFragment<GalleryViewModel> {
     @Override
     public void init() {
         binding.imageInfoToolbar.setTitle("Информация");
+
         initRvImages();
         intiRvComments();
         initViewModel();
@@ -79,23 +81,18 @@ public class GalleryInfoFragment extends BaseFragment<GalleryViewModel> {
         getViewModel().getSelected().observe(getViewLifecycleOwner(), gallery -> {
             initImages(gallery);
             initGalleryInfo(gallery);
-            initComments(gallery.getId());
+            getViewModel().getComments(gallery.getId());
 
         });
-    }
 
-    private void initComments(String galleryId) {
-
-        getViewModel().getComments(galleryId).observe(this, comments -> {
+        getViewModel().getListComments().observe(getViewLifecycleOwner(), comments -> {
             if (comments != null) {
                 commentsAdapter.setCommentList(comments);
                 hideLoading();
             } else {
                 showLoading();
             }
-
         });
-
     }
 
     private void initGalleryInfo(Gallery gallery) {
@@ -134,7 +131,7 @@ public class GalleryInfoFragment extends BaseFragment<GalleryViewModel> {
         imagesAdapter.setImageList(images);
     }
 
-    private void showLoading(){
+    private void showLoading() {
         binding.progressBar.setVisibility(View.VISIBLE);
         binding.rvComments.setVisibility(View.GONE);
     }
@@ -150,6 +147,11 @@ public class GalleryInfoFragment extends BaseFragment<GalleryViewModel> {
     }
 
     @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         App.getINSTANCE().getHomeComponent()
@@ -161,6 +163,7 @@ public class GalleryInfoFragment extends BaseFragment<GalleryViewModel> {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         init();
     }
 

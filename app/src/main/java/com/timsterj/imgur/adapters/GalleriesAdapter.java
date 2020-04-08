@@ -34,6 +34,7 @@ public class GalleriesAdapter extends PagedListAdapter<Gallery, GalleryViewHolde
     @Override
     public void onBindViewHolder(@NonNull GalleryViewHolder holder, int position) {
         Gallery gallery = getItem(position);
+
         holder.setListener(galleryClickListener);
         holder.setData(gallery);
     }

@@ -1,6 +1,7 @@
 package com.timsterj.imgur.adapters.holders;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -58,10 +59,12 @@ public class GalleryViewHolder extends BaseViewHolder<Gallery> {
         loadPreview(link);
 
         set.clone(binding.parentConstraint);
-        set.setDimensionRatio(binding.imgGalleryPreview.getId(), String.format(Locale.getDefault(),"%d:%d", width, height));
+        set.setDimensionRatio(binding.imgGalleryPreview.getId(), String.format(Locale.getDefault(), "%d:%d", width, height));
         set.applyTo(binding.parentConstraint);
 
-        binding.imgGalleryPreview.setOnClickListener(view-> galleryItemClickListener.onItemClick(gallery));
+        binding.imgGalleryPreview.setOnClickListener(view -> {
+            galleryItemClickListener.onItemClick(gallery);
+        });
     }
 
 
