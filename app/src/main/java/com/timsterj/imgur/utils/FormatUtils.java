@@ -17,7 +17,7 @@ public class FormatUtils {
 
         Date date = new Date(epochTime * 1000L);
 
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault());
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.US);
 
         return simpleDateFormat.format(date);
     }
