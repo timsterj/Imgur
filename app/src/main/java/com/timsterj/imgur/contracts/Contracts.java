@@ -19,14 +19,6 @@ public class Contracts {
 
     }
 
-    public static final class AdapterConstant {
-
-        public static final int GALLERY_VIEW_TYPE = 1;
-
-
-
-    }
-
     public static final class NetworkState {
 
         public static final String LOADED = "Loaded";
@@ -35,9 +27,5 @@ public class Contracts {
 
     }
 
-    public static final class TransationConstant {
-        public static final String GALLERY_INFO_NAME = "gellery_info_name";
-
-    }
 
 }

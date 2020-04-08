@@ -60,24 +60,5 @@ public class GalleryInfoFragmentTest {
         return new ViewModelProvider(fragmentTestRule.getActivity()).get(GalleryViewModel.class);
     }
 
-    @Test
-    public void scrollRecyclerView_OpenInfo() throws InterruptedException { //???
-        Thread.sleep(5000);
 
-        RecyclerView recyclerView = fragmentTestRule.getActivity().findViewById(R.id.rv_comments);
-        countItemComments = recyclerView.getAdapter().getItemCount();
-
-        if (countItemComments > 0) {
-            for (int i = 0; i < countItemComments; i++) {
-
-                onView(ViewMatchers.withId(R.id.rv_comments))
-                        .perform(RecyclerViewActions.actionOnItemAtPosition(i,
-                                ViewActions.click()
-                        ));
-
-            }
-        }
-
-
-    }
 }
