@@ -13,7 +13,7 @@ public class Contracts {
 
 
     public static final class RetrofitConstant {
-        public static final String CLIENT_ID = "Client-ID " + "055a2b355746712";
+        public static final String CLIENT_ID = "Client-ID " + "0e5fc490db8c844";
 
         public static final String BASE_URL = "https://api.imgur.com/3/";
 
