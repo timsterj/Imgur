@@ -40,7 +40,4 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentViewHolder> {
     public int getItemCount() {
         return commentList.size();
     }
-
-
-
 }

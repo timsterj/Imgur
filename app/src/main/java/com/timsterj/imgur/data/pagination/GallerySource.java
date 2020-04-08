@@ -18,27 +18,18 @@ import io.reactivex.schedulers.Schedulers;
 public class GallerySource extends PageKeyedDataSource<Integer, Gallery> {
 
     private CompositeDisposable disposableBag = new CompositeDisposable();
-    private MutableLiveData<String> dataState = new MutableLiveData<>();
-    ;
+    private MutableLiveData<String> dataState;
 
     @Inject
     ImgurApi imgurApi;
 
-    public GallerySource(boolean test) {
-
-    }
-
-    public GallerySource() {
-        init();
-    }
-
     void init() {
         App.getINSTANCE().getAppComponent().inject(this);
+        dataState = new MutableLiveData<>();
     }
 
     @Override
     public void loadInitial(@NonNull LoadInitialParams<Integer> params, @NonNull LoadInitialCallback<Integer, Gallery> callback) {
-        dataState.postValue(Contracts.NetworkState.LOADING);
 
         disposableBag.add(imgurApi.getGalleries(
                 "top",
@@ -46,13 +37,11 @@ public class GallerySource extends PageKeyedDataSource<Integer, Gallery> {
                 String.valueOf(1)
                 ).subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
+                        .doOnSubscribe(disposable -> dataState.postValue(Contracts.NetworkState.LOADING))
                         .subscribe(value -> {
                             dataState.postValue(Contracts.NetworkState.LOADED);
                             callback.onResult(value.getData(), null, 2);
-                        }, t -> {
-                            clear();
-                            loadInitial(params, callback);
-                        })
+                        }, t -> loadInitial(params, callback))
         );
 
     }
@@ -64,7 +53,6 @@ public class GallerySource extends PageKeyedDataSource<Integer, Gallery> {
 
     @Override
     public void loadAfter(@NonNull LoadParams<Integer> params, @NonNull LoadCallback<Integer, Gallery> callback) {
-        dataState.postValue(Contracts.NetworkState.LOADING);
 
         disposableBag.add(imgurApi.getGalleries(
                 "top",
@@ -72,14 +60,12 @@ public class GallerySource extends PageKeyedDataSource<Integer, Gallery> {
                 String.valueOf(params.key)
                 ).subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
+                        .doOnSubscribe(disposable -> dataState.postValue(Contracts.NetworkState.LOADING))
                         .subscribe(value -> {
                             dataState.postValue(Contracts.NetworkState.LOADED);
                             callback.onResult(value.getData(), params.key + 1);
 
-                        }, t -> {
-                            loadAfter(params, callback);
-
-                        })
+                        }, t -> loadAfter(params, callback))
         );
     }
 

@@ -25,24 +25,20 @@ public class GalleryViewModel extends BaseViewModel<HomeFragmentContract.Navigat
 
     private CompositeDisposable disposableBag = new CompositeDisposable();
 
-    private LiveData<PagedList<Gallery>> pagedListLiveData;
-    private MutableLiveData<List<Comment>> listComments = new MutableLiveData<>();
+    private LiveData<PagedList<Gallery>> listLiveData;
+    private MutableLiveData<List<Comment>> listComments;
 
     private MutableLiveData<String> dataState;
     private MutableLiveData<Gallery> selected = new MutableLiveData<>();
 
-    @Inject
-    GalleryDataSourceFactory factory;
+    private GalleryDataSourceFactory factory;
 
     @Inject
     ImgurApi imgurApi;
 
     public GalleryViewModel() {
         super();
-    }
-
-    public GalleryViewModel(boolean test) {
-        super(test);
+        init();
     }
 
     @Override
@@ -51,9 +47,16 @@ public class GalleryViewModel extends BaseViewModel<HomeFragmentContract.Navigat
                 .inject(this);
 
         initPagination();
+        initComments();
     }
 
-    public void initPagination() {
+    private void initComments() {
+        listComments = new MutableLiveData<>();
+    }
+
+    private void initPagination() {
+        factory = new GalleryDataSourceFactory();
+        factory.init();
 
         PagedList.Config config = (new PagedList.Config.Builder())
                 .setEnablePlaceholders(true)
@@ -62,37 +65,27 @@ public class GalleryViewModel extends BaseViewModel<HomeFragmentContract.Navigat
                 .setPrefetchDistance(4)
                 .build();
 
-        pagedListLiveData = new LivePagedListBuilder<>(factory, config)
+        listLiveData = new LivePagedListBuilder<>(factory, config)
                 .build();
 
-
         dataState = factory.create().getDataState();
-
     }
 
-
-    public void getComments(String galleryId) {
-        if (galleryId == null || galleryId.isEmpty()) {
-            throw new IllegalArgumentException();
-        }
-
+    public MutableLiveData<List<Comment>> getComments(String galleryId) {
         disposableBag.add(
                 imgurApi.getComments(
                         galleryId,
                         "best"
                 ).subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(
-                                commentDTO -> {
-                                    listComments.setValue(commentDTO.getData());
-                                },
+                        .subscribe(commentDTO -> listComments.setValue(commentDTO.getData()),
                                 t -> {
                                     listComments.setValue(null);
                                     getComments(galleryId);
-                                }
-                        )
+                                })
         );
 
+        return listComments;
     }
 
 
@@ -116,12 +109,8 @@ public class GalleryViewModel extends BaseViewModel<HomeFragmentContract.Navigat
         super.onCleared();
     }
 
-    public MutableLiveData<List<Comment>> getListComments() {
-        return listComments;
-    }
-
-    public LiveData<PagedList<Gallery>> getPagedListLiveData() {
-        return pagedListLiveData;
+    public LiveData<PagedList<Gallery>> getListLiveData() {
+        return listLiveData;
     }
 
     public MutableLiveData<String> getDataState() {
