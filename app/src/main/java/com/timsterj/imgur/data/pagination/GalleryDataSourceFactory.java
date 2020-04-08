@@ -8,18 +8,13 @@ public class GalleryDataSourceFactory extends DataSource.Factory {
 
     private GallerySource gallerySource;
 
-    private MutableLiveData<GallerySource> liveData;
-
-    public void init() {
-        liveData = new MutableLiveData<>();
-    }
+    private MutableLiveData<GallerySource> liveData = new MutableLiveData<>();
 
     @NonNull
     @Override
     public GallerySource create() {
         if (gallerySource == null) {
             gallerySource = new GallerySource();
-            gallerySource.init();
         }
 
         liveData.postValue(gallerySource);
@@ -29,6 +24,10 @@ public class GalleryDataSourceFactory extends DataSource.Factory {
 
     public MutableLiveData<GallerySource> getLiveData() {
         return liveData;
+    }
+
+    public GallerySource getGallerySource() {
+        return gallerySource;
     }
 
     public void clear() {

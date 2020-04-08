@@ -12,6 +12,11 @@ public abstract class BaseViewModel<N> extends ViewModel {
 
     public BaseViewModel() {
         super();
+        init();
+    }
+
+    public BaseViewModel(boolean test){
+
     }
 
     public abstract void init();
