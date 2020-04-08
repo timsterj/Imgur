@@ -30,6 +30,14 @@
         android:layout_gravity="center_horizontal|bottom"
         android:layout_marginBottom="30dp" >
 
+        <TextView
+            android:id="@+id/txt_error"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/error_internet_connection"
+            android:visibility="gone" />
+
         <ProgressBar
             android:id="@+id/progress_bar"
             android:layout_width="wrap_content"
