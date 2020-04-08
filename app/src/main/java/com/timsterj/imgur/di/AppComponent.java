@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.timsterj.imgur.data.pagination.GallerySource;
 import com.timsterj.imgur.di.modules.NavigationModule;
+import com.timsterj.imgur.di.modules.PaginationModule;
 import com.timsterj.imgur.di.modules.RetrofitModule;
 
 import javax.inject.Singleton;
@@ -15,7 +16,8 @@ import dagger.Component;
 @Component(
         modules = {
                 NavigationModule.class,
-                RetrofitModule.class
+                RetrofitModule.class,
+                PaginationModule.class
         }
 )
 public interface AppComponent {
@@ -33,6 +35,7 @@ public interface AppComponent {
 
         @BindsInstance
         Builder context(Context context);
+
 
     }
 

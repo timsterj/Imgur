@@ -55,7 +55,7 @@ public class HomeFragment extends BaseFragment<GalleryViewModel> implements Home
     }
 
     private void initViewModel() {
-        getViewModel().getListLiveData().observe(this, pagedList -> adapter.submitList(pagedList));
+        getViewModel().getPagedListLiveData().observe(this, pagedList -> adapter.submitList(pagedList));
 
         getViewModel().getDataState().observe(this, this::showState);
 
@@ -82,7 +82,6 @@ public class HomeFragment extends BaseFragment<GalleryViewModel> implements Home
     }
 
     private void showLoading() {
-        binding.txtError.setVisibility(View.GONE);
         binding.progressBar.setVisibility(View.VISIBLE);
     }
 
